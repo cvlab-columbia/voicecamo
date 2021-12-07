@@ -4,12 +4,7 @@ Website of the project in [voicecamo.cs.columbia.edu](https://voicecamo.cs.colum
 
 If you use the code, please cite the paper as:
 
-```
-@Article{-,
-  author = {M. Chiquier and C. Mao and C. Vondrick},
-  title = {Real-Time Neural Voice Camouflage},
-}
-```i
+
 
 Please install the necessary requirements with: pip install -r requirements.txt
 
