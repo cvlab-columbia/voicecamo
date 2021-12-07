@@ -11,7 +11,7 @@ import torch
 from torch.utils.data import Dataset, Sampler, DistributedSampler, DataLoader
 #import torchaudio
 from omegaconf.dictconfig import DictConfig
-from deepspeech_pytorch.loader.spec_augment import spec_augment
+from src.loader.spec_augment import spec_augment
 import torchaudio
 torchaudio.set_audio_backend("sox_io")
 

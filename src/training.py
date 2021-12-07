@@ -1,6 +1,6 @@
 import json
-from deepspeech_pytorch.loader.data_module import DeepSpeechDataModule
-from deepspeech_pytorch.model_copy import DeepSpeech, AudioVisualNet, JointModel
+from src.loader.data_module import DeepSpeechDataModule
+from src.model import DeepSpeech, AudioVisualNet, JointModel
 from hydra.utils import to_absolute_path
 from pytorch_lightning import seed_everything
 from pytorch_lightning import loggers as pl_loggers, Trainer

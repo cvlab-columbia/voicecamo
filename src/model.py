@@ -18,8 +18,8 @@ import pdb
 import librosa
 torch.autograd.set_detect_anomaly(True)
 
-from deepspeech_pytorch.decoder import GreedyDecoder
-from deepspeech_pytorch.validation import CharErrorRate, WordErrorRate
+from src.decoder import GreedyDecoder
+from src.validation import CharErrorRate, WordErrorRate
 
 class DownConvBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride,

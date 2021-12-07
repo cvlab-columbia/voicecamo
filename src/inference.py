@@ -11,17 +11,17 @@ import uuid
 
 
 from omegaconf.dictconfig import DictConfig
-from deepspeech_pytorch.loader.data_loader import SpectrogramParser
+from src.loader.data_loader import SpectrogramParser
 from hydra import utils
 from librosa import display
-from deepspeech_pytorch.loader.data_module import DeepSpeechDataModule
-from deepspeech_pytorch.model import DeepSpeech
+from src.loader.data_module import DeepSpeechDataModule
+from src.model import DeepSpeech
 from hydra.utils import to_absolute_path
 from pytorch_lightning import seed_everything
-from deepspeech_pytorch.decoder import Decoder, BeamCTCDecoder
-from deepspeech_pytorch.decoder import GreedyDecoder
+from src.decoder import Decoder, BeamCTCDecoder
+from src.decoder import GreedyDecoder
 from torch.cuda.amp import autocast
-#from deepspeech_pytorch.visualizations import fast_istft
+#from src.visualizations import fast_istft
 #from ctcdecode import CTCBeamDecoder
 torch.multiprocessing.set_sharing_strategy('file_system')
 

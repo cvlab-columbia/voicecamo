@@ -1,7 +1,7 @@
 import pytorch_lightning as pl
 from hydra.utils import to_absolute_path
 
-from deepspeech_pytorch.loader.data_loader import SpectrogramDataset, DSRandomSampler, AudioDataLoader, \
+from src.loader.data_loader import SpectrogramDataset, DSRandomSampler, AudioDataLoader, \
     DSElasticDistributedSampler
 import torch
 from torch.utils.data import DataLoader
