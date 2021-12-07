@@ -5,7 +5,7 @@ Website of the project in [voicecamo.cs.columbia.edu](https://voicecamo.cs.colum
 If you use the code, please cite the paper as:
 
 ```
-@Article{Suris2020learning,
+@Article{-,
   author = {M. Chiquier and C. Mao and C. Vondrick},
   title = {Real-Time Neural Voice Camouflage},
 }
