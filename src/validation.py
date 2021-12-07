@@ -4,7 +4,7 @@ import torch
 from torch.cuda.amp import autocast
 from tqdm import tqdm
 
-from src.decoder import Decoder, GreedyDecoder 
+from src.decoder import Decoder, GreedyDecoder
 
 from pytorch_lightning.metrics import Metric
 import Levenshtein as Lev
