@@ -16,6 +16,8 @@ inputreal: False
 future: False
 future_amt: 0.0
 future_amt_waveform: 0.0
+
+checkpoint_path: '../../../deepspeechattack/deepspeech.pytorch/checkpoints/clean_notdenoiser_waveform_scalar_True_future_True_future_amt50_firstlayer_False_capped_True_power_0.008_lr_0.00015/check/epoch=02-stepstep=15299.00.ckpt'
 data:
   train_path: 'data/libri_train_manifest.json'
   val_path: 'data/libri_val_manifest.json'

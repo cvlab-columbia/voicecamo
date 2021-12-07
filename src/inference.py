@@ -177,8 +177,6 @@ def evaluate(cfg: DictConfig):
         is_distributed=is_distributed
     )
 
-    #list_of_checks=["../../../deepspeechattack/deepspeech.pytorch/checkpoints/clean_notdenoiser_waveform_scalar_True_future_True_future_amt50_firstlayer_False_capped_True_power_0.008_lr_0.00015/check/epoch=02-stepstep=15299.00.ckpt"]
-
     model = DeepSpeech(
         wandb=cfg.wandb,
         future=cfg.future,
@@ -200,7 +198,7 @@ def evaluate(cfg: DictConfig):
     device = 'cuda:0'
     model = model.to(device)
 
-    model.load_state_dict(torch.load("../../../deepspeechattack/deepspeech.pytorch/checkpoints/clean_notdenoiser_waveform_scalar_True_future_True_future_amt50_firstlayer_False_capped_True_power_0.008_lr_0.00015/check/epoch=02-stepstep=15299.00.ckpt")['state_dict'], strict=False)
+    model.load_state_dict(torch.load(cfg.checkpoint_path)['state_dict'], strict=False)
 
     model.eval()
 
