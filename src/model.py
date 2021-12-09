@@ -983,9 +983,6 @@ class DeepSpeech(pl.LightningModule):
                 nchars = len(decoded_target.replace(' ', ''))
                 cer_dist = self.cer_calc(decoded_target, decoded_output[0][0])
 
-                if self.waveform:
-                    decoded_output_shifted, _ = self.evaluation_decoder.decode(x_shifted, output_lengths)
-                    lev_dist_shifted = self.wer_calc(decoded_target, decoded_output_shifted[0][0])
 
         else:
             pdb.set_trace()
@@ -997,15 +994,14 @@ class DeepSpeech(pl.LightningModule):
             self.log('max_abs',max_y.cuda(),on_step=True, sync_dist=True)
 
 
-        return {"loss":-loss_ctc, "lev_dist": float(lev_dist), "lev_dist_shifted": float(lev_dist_shifted), "nwords": float(nwords), "nchars": float(nchars), "cer_dist": float(cer_dist)}
+        return {"loss":-loss_ctc, "lev_dist": float(lev_dist), "nwords": float(nwords), "nchars": float(nchars), "cer_dist": float(cer_dist)}
 
     def training_epoch_end(self, train_step_outputs):
         if self.waveform:
             both = [[dict["loss"] for dict in train_step_outputs],
                    [dict["lev_dist"] for dict in train_step_outputs],
-                    [dict["nwords"] for dict in train_step_outputs],
-                    [dict["lev_dist_shifted"] for dict in train_step_outputs]]
-            loss, lev_dist, n_words, lev_dist_shifted = both[0], both[1], both[2], both[3]
+                    [dict["nwords"] for dict in train_step_outputs]]
+            loss, lev_dist, n_words= both[0], both[1], both[2]
         else:
             both = [[dict["loss"] for dict in train_step_outputs],
                     [dict["lev_dist"] for dict in train_step_outputs],
@@ -1014,9 +1010,7 @@ class DeepSpeech(pl.LightningModule):
 
         self.logger.experiment.log({"epoch_loss_train":torch.mean(torch.tensor(loss)).cuda()})
         self.logger.experiment.log({"wer_train_epoch":torch.mean(torch.tensor(lev_dist)).cuda() / torch.mean(torch.tensor(n_words)).cuda()})
-        if self.waveform:
-            self.logger.experiment.log({"wer_train_shifted_epoch":
-                                       torch.mean(torch.tensor(lev_dist_shifted)).cuda() / torch.mean(torch.tensor(n_words)).cuda()})
+
 
     def validation_step(self, batch, batch_idx):
         inputs, targets, mag_noises, input_percentages, target_sizes, scalar = batch
@@ -1030,10 +1024,7 @@ class DeepSpeech(pl.LightningModule):
             out = x.transpose(0, 1)  # TxNxH
             out = out.log_softmax(-1)
             loss_ctc = self.criterion(out, targets, output_lengths, target_sizes)
-            if self.waveform:
-                x_shifted_transform = x_shifted.transpose(0, 1)  # TxNxH
-                x_shifted_transform = x_shifted_transform.log_softmax(-1)
-                loss_ctc_shifted = self.criterion(x_shifted_transform, targets, output_lengths, target_sizes)
+
 
             with torch.no_grad():
                 decoded_output, _ = self.evaluation_decoder.decode(x, output_lengths)
@@ -1045,13 +1036,8 @@ class DeepSpeech(pl.LightningModule):
                 nchars = len(decoded_target.replace(' ', ''))
                 cer_dist = self.cer_calc(decoded_target, decoded_output[0][0])
 
-                if self.waveform:
-                    decoded_output_shifted, _ = self.evaluation_decoder.decode(x_shifted, output_lengths)
-                    lev_dist_shifted = self.wer_calc(decoded_target, decoded_output_shifted[0][0])
-
         else:
-            pdb.set_trace()
-            return {"loss":torch.tensor([0.0]), "lev_dist": float(0), "lev_dist_shifted": float(0), "nwords": float(0), "nchars": float(0), "cer_dist": float(0)}
+            return {"loss":torch.tensor([0.0]), "lev_dist": float(0), "nwords": float(0), "nchars": float(0), "cer_dist": float(0)}
 
         if self.wandb:
 
@@ -1062,7 +1048,7 @@ class DeepSpeech(pl.LightningModule):
 
             self.log('max_abs_val',max_y.cuda(),on_step=True, sync_dist=True)
 
-        return {"loss": -loss_ctc, "lev_dist": float(lev_dist), "lev_dist_shifted": float(lev_dist_shifted),
+        return {"loss": -loss_ctc, "lev_dist": float(lev_dist),
                     "nwords": float(nwords), "nchars": float(nchars), "cer_dist": float(cer_dist)}
 
 
@@ -1070,9 +1056,8 @@ class DeepSpeech(pl.LightningModule):
         if self.waveform:
             both = [[dict["loss"] for dict in val_step_outputs],
                     [dict["lev_dist"] for dict in val_step_outputs],
-                    [dict["nwords"] for dict in val_step_outputs],
-                    [dict["lev_dist_shifted"] for dict in val_step_outputs]]
-            loss, lev_dist, n_words, lev_dist_shifted = both[0], both[1], both[2], both[3]
+                    [dict["nwords"] for dict in val_step_outputs]]
+            loss, lev_dist, n_words  = both[0], both[1], both[2]
         else:
             both = [[dict["loss"] for dict in val_step_outputs],
                     [dict["lev_dist"] for dict in val_step_outputs],
@@ -1080,9 +1065,7 @@ class DeepSpeech(pl.LightningModule):
             loss, lev_dist, n_words = both[0], both[1], both[2]
         self.logger.experiment.log({"epoch_loss_val":torch.mean(torch.tensor(loss)).cuda()})
         self.logger.experiment.log({"wer_valepoch":torch.mean(torch.tensor(lev_dist)).cuda() / torch.mean(torch.tensor(n_words)).cuda()})
-        if self.waveform:
-            self.logger.experiment.log({"wer_val_shifted_epoch":torch.mean(torch.tensor(lev_dist_shifted)).cuda() / torch.mean(
-                                                torch.tensor(n_words)).cuda()})
+
 
     def cer_calc(self, s1, s2):
         """
