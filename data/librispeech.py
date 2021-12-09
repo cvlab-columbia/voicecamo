@@ -4,11 +4,11 @@ import tarfile
 import argparse
 import subprocess
 
-from deepspeech_pytorch.data.data_opts import add_data_opts
+from data_opts import add_data_opts
 from tqdm import tqdm
 import shutil
 
-from deepspeech_pytorch.data.utils import create_manifest
+from utils import create_manifest
 
 parser = argparse.ArgumentParser(description='Processes and downloads LibriSpeech dataset.')
 parser = add_data_opts(parser)
@@ -21,15 +21,9 @@ parser.add_argument('--files-to-use', default="train-clean-100.tar.gz,"
 args = parser.parse_args()
 
 LIBRI_SPEECH_URLS = {
-    "train": ["http://www.openslr.org/resources/12/train-clean-100.tar.gz",
-              "http://www.openslr.org/resources/12/train-clean-360.tar.gz",
-              "http://www.openslr.org/resources/12/train-other-500.tar.gz"],
-
-    "val": ["http://www.openslr.org/resources/12/dev-clean.tar.gz",
-            "http://www.openslr.org/resources/12/dev-other.tar.gz"],
-
+    "train": ["http://www.openslr.org/resources/12/train-clean-100.tar.gz"],
+    "val": ["http://www.openslr.org/resources/12/dev-clean.tar.gz"],
     "test_clean": ["http://www.openslr.org/resources/12/test-clean.tar.gz"],
-    "test_other": ["http://www.openslr.org/resources/12/test-other.tar.gz"]
 }
 
 
@@ -57,6 +51,7 @@ def _process_file(wav_dir, txt_dir, base_filename, root_dir):
 
 
 def main():
+    print("hi")
     target_dl_dir = args.target_dir
     if not os.path.exists(target_dl_dir):
         os.makedirs(target_dl_dir)
