@@ -2,23 +2,17 @@
 
 Website of the project in [voicecamo.cs.columbia.edu](https://voicecamo.cs.columbia.edu)
 
-If you use the code, please cite the paper as:
-
-
-
 Please install the necessary requirements with: pip install -r requirements.txt
 
 ## Data
 We work with the [LibriSpeech dataset](https://www.openslr.org/12/) for this project. To run our code, you 
-will need to download their wav files and transcriptions. 
-
-Specifically, the **data** directory has to contain:
+will need to download their wav files and transcriptions. You can do this by running the data/librispeech.py file. This will generate the manifest json files. The LibriSpeech dataset must be a folder in the data folder as such: data/LibriSpeech_dataset. This folder must contain test_clean, train, and val folders. Within each of these folders you should have a txt and a wav folder. 
 
 The path to this directory has to be introduced in the config file. 
 
 
 ## Pretrained models
-The pretrained models reported in our paper can be found in the following links:
+The pretrained models reported in our paper can be found by emailing the author at mac2500@columbia.edu, at which point we will grant you access to our google drive link with the checkpoints.
 
 To run inference, please just use the command: "python run_inference.py"
 
