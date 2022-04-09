@@ -22,8 +22,11 @@ args = parser.parse_args()
 
 LIBRI_SPEECH_URLS = {
     "train": ["http://www.openslr.org/resources/12/train-clean-100.tar.gz"],
-    "val": ["http://www.openslr.org/resources/12/dev-clean.tar.gz"],
-    "test_clean": ["http://www.openslr.org/resources/12/test-clean.tar.gz"],
+
+    "val": ["http://www.openslr.org/resources/12/dev-clean.tar.gz",
+            "http://www.openslr.org/resources/12/dev-other.tar.gz"],
+
+    "test_clean": ["http://www.openslr.org/resources/12/test-clean.tar.gz"]
 }
 
 
@@ -51,7 +54,6 @@ def _process_file(wav_dir, txt_dir, base_filename, root_dir):
 
 
 def main():
-    print("hi")
     target_dl_dir = args.target_dir
     if not os.path.exists(target_dl_dir):
         os.makedirs(target_dl_dir)

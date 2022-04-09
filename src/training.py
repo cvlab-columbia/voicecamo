@@ -76,8 +76,8 @@ def train(cfg: DictConfig):
     )
 
 
-    model.load_state_dict(torch.load("../librispeech_model_statedict.pth"),strict=False)
-
+    model.load_state_dict(torch.load("../../../../deepspeechattack/deepspeech.pytorch/librispeech_model_statedict.pth"),strict=False)
+    #model.load_state_dict(torch.load("../future50_clean_notdenoiser_waveform_scalar_True_future_True_future_amt50_firstlayer_False_capped_True_power_0.008_lr_0.00015/epoch=06-stepstep=253349.00.ckpt"),strict=False)
     if cfg.wandb:
         logger = pl_loggers.WandbLogger(name=wandb_path, save_dir="", project="noise")
 

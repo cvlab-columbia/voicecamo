@@ -14,12 +14,12 @@ capped: True
 powerpenalization: 0.0
 inputreal: False
 future: True
-checkpoint_path: '../../../deepspeechattack/deepspeech.pytorch/checkpoints/clean_notdenoiser_waveform_scalar_True_future_True_future_amt50_firstlayer_False_capped_True_power_0.008_lr_0.00015/check/epoch=02-stepstep=15299.00.ckpt'
+checkpoint_path: 'checkpoints/finalcheckpoint.ckpt'
 
 data:
   train_path: 'data/libri_train_manifest.json'
   val_path: 'data/libri_val_manifest.json'
-  test_path: 'data/libri_test_manifest.json'
+  test_path: 'data/libri_test_clean_manifest.json'
   batch_size: 4 # Batch size for training
   num_workers: 4 # Number of workers used in data-loading
   labels_path: 'labels.json'  # Contains tokens for model output
@@ -29,7 +29,6 @@ data:
     window_stride: .01  # Window stride for spectrogram generation (seconds)
     window: 'hamming'
     size: 1.0
-    power: 0.5
   augmentation:
     speed_volume_perturb: False  # Use random tempo and gain perturbations.
     spec_augment: False  # Use simple spectral augmentation on mel spectograms.
@@ -57,8 +56,8 @@ trainer:
   gradient_clip_val: 5000000000
   process_position: 0
   num_nodes: 1
-  num_processes: 8
-  gpus: 8
+  num_processes: 1
+  gpus: 1
   auto_select_gpus: False
   progress_bar_refresh_rate: 1
   overfit_batches: 0.0

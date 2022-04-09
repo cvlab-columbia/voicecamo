@@ -8,7 +8,7 @@ from omegaconf.dictconfig import DictConfig
 
 cs = ConfigStore.instance()
 
-@hydra.main(config_path="src/configs", config_name="train_config_waveform_notfirstlayer_future50.yaml")
+@hydra.main(config_path="src/configs", config_name="train_config_waveform_future50.yaml")
 def hydra_main(cfg: DictConfig):
     train(cfg=cfg)
 
