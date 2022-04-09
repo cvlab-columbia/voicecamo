@@ -14,7 +14,11 @@ The path to this directory has to be introduced in the config file.
 ## Pretrained models
 The pretrained models reported in our paper can be found by emailing the author at mac2500@columbia.edu, at which point we will grant you access to our google drive link with the checkpoints.
 
+## Inference
 To run inference, please just use the command: "python run_inference.py"
+
+## Training
+To train your own modle, please run the command: "python run_train.py"
 
 Extract the models under the `/path/to/your/checkpoints` directory you introduce in 
 the checkpoint_dir argument in the config file. 
